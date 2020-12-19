@@ -30,7 +30,7 @@ def get_mean_valence(sp, top_tracks_uri):
     stdev_Valence = 0
     for tracks in top_tracks_uri:
         tracks_all_data = sp.audio_features(tracks)
-        for track_data in tracks_all_data
+        for track_data in tracks_all_data:
             track_valence.append(track_data["valence"])
         mean_Valence = statistics.mean(track_Valence)
         stdev_Valence = statistics.stdev(track_Valence)
@@ -43,7 +43,7 @@ def get_mean_tempo(sp, top_tracks_uri):
     stdev_Tempo = 0
     for tracks in top_tracks_uri:
         tracks_all_data = sp.audio_features(tracks)
-        for track_data in tracks_all_data
+        for track_data in tracks_all_data:
             track_Tempo.append(track_data["tempo"])
         mean_Tempo = statistics.mean(track_Tempo)
         stdev_Tempo = statistics.stdev(track_Tempo)
@@ -55,7 +55,7 @@ def get_mean_energy(sp, top_tracks_uri):
     stdev_Energy = 0
     for tracks in top_tracks_uri:
         tracks_all_data = sp.audio_features(tracks)
-        for track_data in tracks_all_data
+        for track_data in tracks_all_data:
             track_Energy.append(track_data["energy"])
         mean_Energy =  statistics.mean(track_Energy)
         stdev_Energy = statistics.stdev(track_Energy)
