@@ -34,3 +34,8 @@ if feeling == 'happy':
 if feeling == 'happy':
     if (valency * 0.7 + danceability * 0.2 + energy *0.1 > 1):
         append
+
+get the mean and standard deviation for all songs
+then everything above mean + std dev is happy
+mean - std dev to mean + std dev is neutral
+below mean - std dev is sad
