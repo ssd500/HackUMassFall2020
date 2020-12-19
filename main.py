@@ -13,11 +13,16 @@ def get_top_artists(sp):
     
     return results['items']
 
-get_top_artists(sp)
-
-
-
-
+def get_top_tracks(sp, top_artists):
+    
+    top_tracks_uri = []
+    for i in top_artists:
+        top_tracks_all_data = sp.artist_top_tracks(i)
+        top_tracks_data = top_tracks_all_data['tracks']
+        for track_data in top_tracks_data:
+            top_tracks_uri.append(track_data['uri'])
+    
+    return top_tracks_uri
 
 
 
