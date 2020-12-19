@@ -124,13 +124,13 @@ def select_the_tracks(sp, top_tracks_uri, mood):
                         if(track_data["mode"] == 1
                         and track_data["valence"] >= (mean_Valence + stdev_Valence)
                         and ((mean_Tempo - stdev_Tempo) < track_data["tempo"] < (mean_Tempo + stdev_Tempo))
-                        and ((mean_Energy - stdev_Energy) < track_data["energy"] < (mean_Energy + stdev_Energy)):
+                        and ((mean_Energy - stdev_Energy) < track_data["energy"] < (mean_Energy + stdev_Energy))):
                             selected_tracks_uri.append(track_data["uri"])
                     elif mood == "Sad":
                         if(track_data["mode"] == 0
                         and track_data["valence"] < (mean_Valence - stdev_Valence)
                         and ((mean_Tempo - stdev_Tempo) < track_data["tempo"] < (mean_Tempo + stdev_Tempo))
-                        and ((mean_Energy - stdev_Energy) < track_data["energy"] < (mean_Energy + stdev_Energy)):
+                        and ((mean_Energy - stdev_Energy) < track_data["energy"] < (mean_Energy + stdev_Energy))):
                             selected_tracks_uri.append(track_data["uri"])
                     elif mood == "Cheerful":
                         if(track_data["mode"] == 1
