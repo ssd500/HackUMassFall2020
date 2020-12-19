@@ -43,3 +43,12 @@ get the mean and standard deviation for all songs
 then everything above mean + std dev is happy
 mean - std dev to mean + std dev is neutral
 below mean - std dev is sad
+
+find mean_valence, mean_tempo, mean_energy
+find stddev_valence, stddev_tempo, stddev_energy
+for example, high_valence = all valence greater than equal to mean_valence + stddev_valence
+medium_valence = all valence between mean_valence - stddev_valence & mean_valence + stddev_valence
+low_valence = all valence lesser than mean_valence - stddev_valence
+u might wanna do weighted sum like mean_valence + 0.5 * stddev_valence 
+or mean_valence + 0.25 * stddev_valence 
+depending on how much data you want distributed for each categories
