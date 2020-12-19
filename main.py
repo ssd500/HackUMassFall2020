@@ -139,6 +139,16 @@ def select_the_tracks(sp, top_tracks_uri, mood):
                     continue
 
     return selected_tracks_uri
+			   
+			   
+#creates and names the playlist for the user using the racks found in the the select_the_tracks method
+def make_playlist(sp, selected_tracks_uri):
+    user_all_data = sp.current_user()
+    user_id = user_all_data["id"]
+    playlist_all_data = sp.user_playlist_create(user_id,"Your mood here")
+    playlist_id = playlist_all_data["id"]
+    random.shuffle(selected_tracks_uri)
+    sp.user_playlist_add_tracks(user_id, playlist_id, selected_tracks_uri[0:15])
 
 			   
 ###
