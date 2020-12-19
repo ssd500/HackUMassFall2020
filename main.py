@@ -144,8 +144,8 @@ def select_the_tracks(sp, top_tracks_uri, mood):
                         and track_data["tempo"] >= (mean_Tempo + stdev_Tempo)
                         and track_data["energy"] >= (mean_Energy + stdev_Energy)):
                             selected_tracks_uri.append(track_data["uri"])
-                except TypeError as type_e:
-                    continue
+            except TypeError as type_e:
+                continue
 
     return selected_tracks_uri
 			   
