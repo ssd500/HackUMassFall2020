@@ -24,7 +24,7 @@ def get_top_tracks(sp, top_artists):
     return top_tracks_uri
 
 
-def get_mean_valence(sp, top_tracks_uri)
+def get_mean_valence(sp, top_tracks_uri):
     track_Valence = []
     median_Valence = 0
     stdev_Valence = 0
@@ -37,7 +37,7 @@ def get_mean_valence(sp, top_tracks_uri)
 
     return mean_Valence, stdev_Valence
 
-def get_mean_tempo(sp, top_tracks_uri)
+def get_mean_tempo(sp, top_tracks_uri):
     track_Tempo = []
     mean_Tempo = 0
     stdev_Tempo = 0
@@ -49,7 +49,7 @@ def get_mean_tempo(sp, top_tracks_uri)
         stdev_Tempo = statistics.stdev(track_Tempo)
     return mean_Tempo, stdev_Tempo
 
-def get_mean_energy(sp, top_tracks_uri)
+def get_mean_energy(sp, top_tracks_uri):
     track_Energy = []
     mean_Energy = 0
     stdev_Energy = 0
