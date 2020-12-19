@@ -14,3 +14,23 @@ def get_top_artists(sp):
     return results['items']
 
 get_top_artists(sp)
+
+
+
+
+
+
+
+
+
+if feeling == 'happy':
+	if (valence lies between 0.8 and 1) and (danceability > 0.5) and (energy > 0.3):
+		append that song
+
+if feeling == 'happy':
+    if (valency + danceability + energy > 1.5):
+        append
+
+if feeling == 'happy':
+    if (valency * 0.7 + danceability * 0.2 + energy *0.1 > 1):
+        append
