@@ -58,7 +58,7 @@ def get_tempo(sp, top_tracks_uri):
     
     for tracks in top_tracks_uri:
         tracks_all_data = sp.audio_features(tracks)
-        for track_data in tracks_all_data
+        for track_data in tracks_all_data:
             track_Tempo.append(track_data["tempo"])
 
 def get_mean_Tempo(track_Tempo):      
@@ -73,7 +73,7 @@ def get_energy(sp, top_tracks_uri):
     
     for tracks in top_tracks_uri:
         tracks_all_data = sp.audio_features(tracks)
-        for track_data in tracks_all_data
+        for track_data in tracks_all_data:
             track_Energy.append(track_data["energy"])
 
 def get_mean_Energy(track_Energy):
