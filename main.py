@@ -3,6 +3,16 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
 scope = "user-library-read user-top-read playlist-modify-public"
+moods = ["mellow", "melancholy", "happy", "sad", "cheerful", "angry"]
+track_Valence = []
+median_Valence = 0
+stdev_Valence = 0
+track_Tempo = []
+mean_Tempo = 0
+stdev_Tempo = 0
+track_Energy = []
+mean_Energy = 0
+stdev_Energy = 0
 
 sp = spotipy.Spotify(auth_manager = SpotifyOAuth(client_id = "326a452a53254fa9bc90368567c70861", client_secret = "7d518966cb804f019a4301db077c1c31", redirect_uri = "http://localhost:8888/callback", scope = scope))
 
@@ -28,21 +38,20 @@ def get_top_tracks(sp, top_artists):
     
     return top_tracks_uri
 
-
 def get_valence(sp, top_tracks_uri):
 
     for tracks in top_tracks_uri:
         tracks_all_data = sp.audio_features(tracks)
         for track_data in tracks_all_data:
-            track_valence.append(track_data["valence"])
+            track_Valence.append(track_data["valence"])
 
 def get_mean_Valence(track_Valence):
-    
-    return mean_Valence = statistics.mean(track_Valence)
+    mean_Valence = statistics.mean(track_Valence)
+    return mean_Valence
 
 def get_stdev_Valence(track_Valence):
-    
-    return stdev_Valence = statistics.stdev(track_Valence)
+    stdev_Valence = statistics.stdev(track_Valence)
+    return stdev_Valence
 
 
 def get_tempo(sp, top_tracks_uri):
@@ -53,13 +62,12 @@ def get_tempo(sp, top_tracks_uri):
             track_Tempo.append(track_data["tempo"])
 
 def get_mean_Tempo(track_Tempo):      
-    
-    return mean_Tempo = statistics.mean(track_Tempo)
+    mean_Tempo = statistics.mean(track_Tempo)
+    return mean_Tempo
 
 def get_stdev_Tempo(track_Tempo):
-    
-    return stdev_Tempo = statistics.stdev(track_Tempo)
-
+    stdev_Tempo = statistics.stdev(track_Tempo)
+    return stdev_Tempo
 
 def get_energy(sp, top_tracks_uri):
     
@@ -69,12 +77,13 @@ def get_energy(sp, top_tracks_uri):
             track_Energy.append(track_data["energy"])
 
 def get_mean_Energy(track_Energy):
-    
-    return mean_Energy = statistics.mean(track_Energy)
+    mean_Energy = statistics.mean(track_Energy)
+    return mean_Energy
 
 def get_stdev_Energy(track_Energy):
-    
-    return stdev_Energy = statistics.stdev(track_Energy)
+    stdev_Energy = statistics.stdev(track_Energy)
+    return stdev_Energy
+
 
 # high_valence = all valence greater than equal to mean_valence + stddev_valence
 
