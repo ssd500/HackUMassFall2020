@@ -8,9 +8,14 @@ sp = spotipy.Spotify(auth_manager = SpotifyOAuth(client_id = "326a452a53254fa9bc
 
 def get_top_artists(sp):
     
-    results = sp.current_user_top_artists(time_range = "short_term", limit = 15)
+    top_artists = sp.current_user_top_artists(time_range = "short_term", limit = 15)
     
-    return results['items']
+    top_artists_uri = []
+
+    for i in top_artists["items"]:
+        top_artists_uri.append(i["uri"])
+
+    return top_artists_uri
 
 def get_top_tracks(sp, top_artists):
     
