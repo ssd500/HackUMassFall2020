@@ -1,8 +1,11 @@
 # Our HackUMass2020 code will go into here! Yippee! Yeet! Beep ! Woot!
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+from flask import Flask
+import statistics
 
 scope = "user-library-read user-top-read playlist-modify-public"
+moods = ["mellow", "melancholy", "happy", "sad", "cheerful", "angry"]
 track_Valence = []
 median_Valence = 0
 stdev_Valence = 0
@@ -13,11 +16,15 @@ track_Energy = []
 mean_Energy = 0
 stdev_Energy = 0
 
+#current mood
+curr_mood = "null"
+
+
 sp = spotipy.Spotify(auth_manager = SpotifyOAuth(client_id = "326a452a53254fa9bc90368567c70861", client_secret = "7d518966cb804f019a4301db077c1c31", redirect_uri = "http://localhost:8888/callback", scope = scope))
 
 def get_top_artists(sp):
     
-    top_artists = sp.current_user_top_artists(time_range = "short_term", limit = 15)
+    top_artists = sp.current_user_top_artists(time_range = "short_term", limit = 10)
     
     top_artists_uri = []
 
@@ -38,11 +45,13 @@ def get_top_tracks(sp, top_artists):
     return top_tracks_uri
 
 def get_valence(sp, top_tracks_uri):
-
+    track_Valence = []
     for tracks in top_tracks_uri:
         tracks_all_data = sp.audio_features(tracks)
         for track_data in tracks_all_data:
             track_Valence.append(track_data["valence"])
+    return track_Valence
+
 
 def get_mean_Valence(track_Valence):
     mean_Valence = statistics.mean(track_Valence)
@@ -102,62 +111,45 @@ def get_stdev_Energy(track_Energy):
 
 def select_the_tracks(sp, top_tracks_uri, mood):
     selected_tracks_uri = []
+
+    mean_Valence = get_mean_Valence(get_valence(sp, top_tracks_uri))
+
     for tracks in top_tracks_uri:
         tracks_all_data = sp.audio_features(tracks)
         for track_data in tracks_all_data:
-            try:
-                if mood == "Mellow":
-                    if(track_data["mode"] == 1
-                    and track_data["valence"] >= (mean_Valence + stdev_Valence)
-                    and track_data["tempo"] < (mean_Tempo - stdev_Tempo)
-                    and track_data["energy"] < (mean_Energy - stdev_Energy)):
-                        selected_tracks_uri.append(track_data["uri"])
-                elif mood == "Melancholy":
-                    if(track_data["mode"] == 0
-                    and track_data["valence"] < (mean_Valence - stdev_Valence)
-                    and track_data["tempo"] < (mean_Tempo - stdev_Tempo)
-                    and track_data["energy"] < (mean_Energy - stdev_Energy)):
-                        selected_tracks_uri.append(track_data["uri"])
-                elif mood == "Happy":
-                    if(track_data["mode"] == 1
-                    and track_data["valence"] >= (mean_Valence + stdev_Valence)
-                    and ((mean_Tempo - stdev_Tempo) < track_data["tempo"] < (mean_Tempo + stdev_Tempo))
-                    and ((mean_Energy - stdev_Energy) < track_data["energy"] < (mean_Energy + stdev_Energy))):
-                        selected_tracks_uri.append(track_data["uri"])
-                elif mood == "Sad":
-                    if(track_data["mode"] == 0
-                    and track_data["valence"] < (mean_Valence - stdev_Valence)
-                    and ((mean_Tempo - stdev_Tempo) < track_data["tempo"] < (mean_Tempo + stdev_Tempo))
-                    and ((mean_Energy - stdev_Energy) < track_data["energy"] < (mean_Energy + stdev_Energy))):
-                        selected_tracks_uri.append(track_data["uri"])
-                elif mood == "Cheerful":
-                    if(track_data["mode"] == 1
-                    and track_data["valence"] >= (mean_Valence + stdev_Valence)
-                    and track_data["tempo"] >= (mean_Tempo + stdev_Tempo)
-                    and track_data["energy"] >= (mean_Energy + stdev_Energy)):
-                        selected_tracks_uri.append(track_data["uri"])
-                elif mood == "Angry":
-                    if(track_data["mode"] == 0
-                    and track_data["valence"] < (mean_Valence - stdev_Valence)
-                    and track_data["tempo"] >= (mean_Tempo + stdev_Tempo)
-                    and track_data["energy"] >= (mean_Energy + stdev_Energy)):
-                        selected_tracks_uri.append(track_data["uri"])
-            except TypeError as type_e:
-                continue
-    print(selected_tracks_uri)
+            
+            if mood == "Mellow":
+                if track_data["mode"] == 1  and track_data["valence"] >= (mean_Valence + stdev_Valence): # and track_data["tempo"] < (mean_Tempo - stdev_Tempo)and track_data["energy"] < (mean_Energy - stdev_Energy):
+                    selected_tracks_uri.append(track_data["uri"])
+            if mood == "Melancholy":
+                if track_data["mode"] == 0 and track_data["valence"] < (mean_Valence - stdev_Valence): # and track_data["tempo"] < (mean_Tempo - stdev_Tempo) and track_data["energy"] < (mean_Energy - stdev_Energy):
+                    selected_tracks_uri.append(track_data["uri"])
+            if mood == "Happy":
+                if track_data["mode"] == 1 and track_data["valence"] >= (mean_Valence + stdev_Valence): # and ((mean_Tempo - stdev_Tempo) < track_data["tempo"] < (mean_Tempo + stdev_Tempo)) and ((mean_Energy - stdev_Energy) < track_data["energy"] < (mean_Energy + stdev_Energy))
+                    selected_tracks_uri.append(track_data["uri"])
+            if mood == "Sad":
+                if track_data["mode"] == 0 and track_data["valence"] < (mean_Valence - stdev_Valence): # and ((mean_Tempo - stdev_Tempo) < track_data["tempo"] < (mean_Tempo + stdev_Tempo)) and ((mean_Energy - stdev_Energy) < track_data["energy"] < (mean_Energy + stdev_Energy)):
+                    selected_tracks_uri.append(track_data["uri"])
+            if mood == "Cheerful":
+                if track_data["mode"] == 1 and track_data["valence"] >= (mean_Valence + stdev_Valence): # and track_data["tempo"] >= (mean_Tempo + stdev_Tempo) and track_data["energy"] >= (mean_Energy + stdev_Energy):
+                    selected_tracks_uri.append(track_data["uri"])
+            if mood == "Angry":
+                if track_data["mode"] == 0 and track_data["valence"] < (mean_Valence - stdev_Valence): # and track_data["tempo"] >= (mean_Tempo + stdev_Tempo) and track_data["energy"] >= (mean_Energy + stdev_Energy):
+                    selected_tracks_uri.append(track_data["uri"])
+
+                
+
     return selected_tracks_uri
 			   
 			   
 #creates and names the playlist for the user using the racks found in the the select_the_tracks method
-def make_playlist(sp, selected_tracks_uri):
+def make_playlist(sp, selected_tracks_uri, mood):
     user_all_data = sp.current_user()
     user_id = user_all_data["id"]
-    playlist_all_data = sp.user_playlist_create(user_id,"Your mood here")
+    playlist_all_data = sp.user_playlist_create(user_id,mood)
     playlist_id = playlist_all_data["id"]
-    random.shuffle(selected_tracks_uri)
-    sp.user_playlist_add_tracks(user_id, playlist_id, selected_tracks_uri[0:15])
+    sp.user_playlist_add_tracks(user_id, playlist_id, selected_tracks_uri)
 
-			   
 ###
         
 
