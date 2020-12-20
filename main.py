@@ -3,7 +3,6 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
 scope = "user-library-read user-top-read playlist-modify-public"
-moods = ["mellow", "melancholy", "happy", "sad", "cheerful", "angry"]
 track_Valence = []
 median_Valence = 0
 stdev_Valence = 0
