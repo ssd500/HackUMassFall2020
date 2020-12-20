@@ -44,6 +44,8 @@ body {
     top: 30%;
     left: 40%;
     position: absolute;
+    border-radius: 5%;
+    border: 0ch;
 }
 
 #title {
