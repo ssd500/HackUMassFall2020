@@ -107,46 +107,45 @@ def select_the_tracks(sp, top_tracks_uri, mood):
         tracks_all_data = sp.audio_features(tracks)
         for track_data in tracks_all_data:
             try:
-                for mood in moods:
-                    if mood == "Mellow":
-                        if(track_data["mode"] == 1
-                        and track_data["valence"] >= (mean_Valence + stdev_Valence)
-                        and track_data["tempo"] < (mean_Tempo - stdev_Tempo)
-                        and track_data["energy"] < (mean_Energy - stdev_Energy)):
-                            selected_tracks_uri.append(track_data["uri"])
-                    elif mood == "Melancholy":
-                        if(track_data["mode"] == 0
-                        and track_data["valence"] < (mean_Valence - stdev_Valence)
-                        and track_data["tempo"] < (mean_Tempo - stdev_Tempo)
-                        and track_data["energy"] < (mean_Energy - stdev_Energy)):
-                            selected_tracks_uri.append(track_data["uri"])
-                    elif mood == "Happy":
-                        if(track_data["mode"] == 1
-                        and track_data["valence"] >= (mean_Valence + stdev_Valence)
-                        and ((mean_Tempo - stdev_Tempo) < track_data["tempo"] < (mean_Tempo + stdev_Tempo))
-                        and ((mean_Energy - stdev_Energy) < track_data["energy"] < (mean_Energy + stdev_Energy))):
-                            selected_tracks_uri.append(track_data["uri"])
-                    elif mood == "Sad":
-                        if(track_data["mode"] == 0
-                        and track_data["valence"] < (mean_Valence - stdev_Valence)
-                        and ((mean_Tempo - stdev_Tempo) < track_data["tempo"] < (mean_Tempo + stdev_Tempo))
-                        and ((mean_Energy - stdev_Energy) < track_data["energy"] < (mean_Energy + stdev_Energy))):
-                            selected_tracks_uri.append(track_data["uri"])
-                    elif mood == "Cheerful":
-                        if(track_data["mode"] == 1
-                        and track_data["valence"] >= (mean_Valence + stdev_Valence)
-                        and track_data["tempo"] >= (mean_Tempo + stdev_Tempo)
-                        and track_data["energy"] >= (mean_Energy + stdev_Energy)):
-                            selected_tracks_uri.append(track_data["uri"])
-                    elif mood == "Angry":
-                        if(track_data["mode"] == 0
-                        and track_data["valence"] < (mean_Valence - stdev_Valence)
-                        and track_data["tempo"] >= (mean_Tempo + stdev_Tempo)
-                        and track_data["energy"] >= (mean_Energy + stdev_Energy)):
-                            selected_tracks_uri.append(track_data["uri"])
+                if mood == "Mellow":
+                    if(track_data["mode"] == 1
+                    and track_data["valence"] >= (mean_Valence + stdev_Valence)
+                    and track_data["tempo"] < (mean_Tempo - stdev_Tempo)
+                    and track_data["energy"] < (mean_Energy - stdev_Energy)):
+                        selected_tracks_uri.append(track_data["uri"])
+                elif mood == "Melancholy":
+                    if(track_data["mode"] == 0
+                    and track_data["valence"] < (mean_Valence - stdev_Valence)
+                    and track_data["tempo"] < (mean_Tempo - stdev_Tempo)
+                    and track_data["energy"] < (mean_Energy - stdev_Energy)):
+                        selected_tracks_uri.append(track_data["uri"])
+                elif mood == "Happy":
+                    if(track_data["mode"] == 1
+                    and track_data["valence"] >= (mean_Valence + stdev_Valence)
+                    and ((mean_Tempo - stdev_Tempo) < track_data["tempo"] < (mean_Tempo + stdev_Tempo))
+                    and ((mean_Energy - stdev_Energy) < track_data["energy"] < (mean_Energy + stdev_Energy))):
+                        selected_tracks_uri.append(track_data["uri"])
+                elif mood == "Sad":
+                    if(track_data["mode"] == 0
+                    and track_data["valence"] < (mean_Valence - stdev_Valence)
+                    and ((mean_Tempo - stdev_Tempo) < track_data["tempo"] < (mean_Tempo + stdev_Tempo))
+                    and ((mean_Energy - stdev_Energy) < track_data["energy"] < (mean_Energy + stdev_Energy))):
+                        selected_tracks_uri.append(track_data["uri"])
+                elif mood == "Cheerful":
+                    if(track_data["mode"] == 1
+                    and track_data["valence"] >= (mean_Valence + stdev_Valence)
+                    and track_data["tempo"] >= (mean_Tempo + stdev_Tempo)
+                    and track_data["energy"] >= (mean_Energy + stdev_Energy)):
+                        selected_tracks_uri.append(track_data["uri"])
+                elif mood == "Angry":
+                    if(track_data["mode"] == 0
+                    and track_data["valence"] < (mean_Valence - stdev_Valence)
+                    and track_data["tempo"] >= (mean_Tempo + stdev_Tempo)
+                    and track_data["energy"] >= (mean_Energy + stdev_Energy)):
+                        selected_tracks_uri.append(track_data["uri"])
             except TypeError as type_e:
                 continue
-
+    print(selected_tracks_uri)
     return selected_tracks_uri
 			   
 			   
@@ -163,28 +162,13 @@ def make_playlist(sp, selected_tracks_uri):
 ###
         
 
-if feeling == 'happy':
-	if (valence lies between 0.8 and 1) and (danceability > 0.5) and (energy > 0.3):
-		append that song
 
-if feeling == 'happy':
-    if (valency + danceability + energy > 1.5):
-        append
 
-if feeling == 'happy':
-    if (valency * 0.7 + danceability * 0.2 + energy *0.1 > 1):
-        append
-
-get the mean and standard deviation for all songs
-then everything above mean + std dev is happy
-mean - std dev to mean + std dev is neutral
-below mean - std dev is sad
-
-find mean_valence, mean_tempo, mean_energy
-find stddev_valence, stddev_tempo, stddev_energy
-for example, high_valence = all valence greater than equal to mean_valence + stddev_valence
-medium_valence = all valence between mean_valence - stddev_valence & mean_valence + stddev_valence
-low_valence = all valence lesser than mean_valence - stddev_valence
-u might wanna do weighted sum like mean_valence + 0.5 * stddev_valence 
-or mean_valence + 0.25 * stddev_valence 
-depending on how much data you want distributed for each categories
+#find mean_valence, mean_tempo, mean_energy
+#find stddev_valence, stddev_tempo, stddev_energy
+#for example, high_valence = all valence greater than equal to mean_valence + stddev_valence
+#medium_valence = all valence between mean_valence - stddev_valence & mean_valence + stddev_valence
+#low_valence = all valence lesser than mean_valence - stddev_valence
+#u might wanna do weighted sum like mean_valence + 0.5 * stddev_valence 
+#or mean_valence + 0.25 * stddev_valence 
+#depending on how much data you want distributed for each categories
